@@ -1,9 +1,10 @@
 *.DS_Store
 .Rhistory
+*.Rproj
 .Rproj*
-./background/*
+background/*
 *.ipynb
-./exploratory/*
-./zips/*
-./raw_data/*
-./processed_data/*
+exploratory/*
+zips/*
+raw_data/*
+processed_data/*
