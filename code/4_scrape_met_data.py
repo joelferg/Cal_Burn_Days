@@ -26,7 +26,7 @@ def scrapePage(date):
 
     normbs = soup.find_all(class_="normb")
     norms = {}
-    for i in normbs:
+    for i in normbs[:15]:
         norms[i.get_text()] = ';'.join([x.get_text() for x in i.find_next_siblings(class_="norm")])
 
 
@@ -51,10 +51,16 @@ start_date = datetime.date(2012,1,1)
 end_date = datetime.date(2020,12,31)
 days_tot = (end_date-start_date).days
 
+last_yr = 0
+
 for day in range(0,days_tot):
     date = start_date+datetime.timedelta(days=day)
+    yr = date.year
+    if yr!=last_yr:
+        print(yr)
+    last_yr = yr
     cur = conn.cursor()
-    cur.execute(f"SELECT COUNT(*) FROM basin_met WHERE date = '{date.year}-{date.month}-{date.day}';")
+    cur.execute(f"SELECT COUNT(*) FROM basin_met WHERE date = '{yr}-{date.month}-{date.day}';")
     res = cur.fetchone()[0]
     cur.close()
     if res == 0:
