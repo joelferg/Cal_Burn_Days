@@ -1,3 +1,4 @@
+*.env
 *.DS_Store
 .Rhistory
 *.Rproj
@@ -8,3 +9,4 @@ exploratory/*
 zips/*
 raw_data/*
 processed_data/*
+.Rproj.user
