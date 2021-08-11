@@ -4,7 +4,7 @@ import shapely.geometry as shg
 import datetime
 from math import floor
 import ee
-'''
+
 # Read in air basins and re-project
 air_basins = gpd.read_file("../raw_data/maps/california-air-resources-board-air-basin-boundaries/CaAirBasin.shp")
 air_basins = air_basins.to_crs("EPSG:4326")
@@ -26,7 +26,7 @@ basin_fires['year'] = basin_fires['acq_date'].apply(lambda x: x.year)
 
 # Save it
 basin_fires.to_pickle("../processed_data/basin_fires_2012-2020.pkl")
-'''
+
 basin_fires = pd.read_pickle("../processed_data/basin_fires_2012-2020.pkl")
 sac_fires = basin_fires.loc[basin_fires['NAME']=="Sacramento Valley"]
 #basin_fires_2020 = basin_fires.loc[basin_fires['year']==2020]
