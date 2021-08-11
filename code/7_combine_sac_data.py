@@ -24,7 +24,8 @@ sac_cropland_fires = pd.merge(sac_fires,cropland_fires['index'],
                              on='index')
 
 basin_met = pd.read_pickle("../processed_data/basin_met_clean.pkl")
-basin_met = basin_met[['date','burn_dec_3000','aq_fact','alloc_eq','arb_rev_basin_alloc']]
+basin_met['alloc_eq_manual'] = (-1/0.006)* (-170 + (1 * basin_met['am_stab']) + (0.2049159 * basin_met['millibar500_ht'])- (0.3579679 * basin_met['wind_spd']) + (1 * basin_met['aq_fact']))
+basin_met = basin_met[['date','burn_dec_3000','aq_fact','alloc_eq','alloc_eq_manual','arb_rev_basin_alloc']]
 
 sac_cfires_daily = sac_cropland_fires.groupby('acq_date')['fires'].sum()
 basin_met_fires = pd.merge(basin_met,sac_cfires_daily,
