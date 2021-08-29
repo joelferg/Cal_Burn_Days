@@ -1,0 +1,32 @@
+\begin{tabular}{lccc}
+\tabularnewline\midrule\midrule
+Dependent Variables:&fires&\multicolumn{2}{c}{sample\_measurement}\\
+Model:&(1) & (2) & (3)\\
+\midrule \emph{Variables}&   &   &  \\
+arb\_rev\_basin\_alloc&0.0106$^{***}$ & 0.0024$^{***}$ &   \\
+  &(0.0031) & (0.0004) &   \\
+am\_stab&0.3421$^{***}$ & 0.0564$^{***}$ & -0.0036\\
+  &(0.0821) & (0.0089) & (0.0055)\\
+wind\_spd&0.1082 & 0.0734$^{***}$ & 0.0038\\
+  &(0.1147) & (0.0154) & (0.0078)\\
+millibar500\_ht&0.0286 & 0.0751$^{***}$ & 0.0607$^{***}$\\
+  &(0.0336) & (0.0046) & (0.0038)\\
+rain&2.082 & 2.648$^{***}$ & 1.826$^{***}$\\
+  &(1.523) & (0.1995) & (0.1204)\\
+aq\_fact&0.0830 & 0.8084$^{***}$ & 0.7647$^{***}$\\
+  &(0.0644) & (0.0178) & (0.0152)\\
+fires&   &    & 1.089$^{***}$\\
+  &   &    & (0.3404)\\
+\midrule \emph{Fixed-effects}&   &   &  \\
+month$\times$year & Yes &  & \\
+site\_number$\times$month &  & Yes & Yes\\
+year &  & Yes & Yes\\
+\midrule \emph{Fit statistics}&  & & \\
+Observations & 2,521&199,779&199,779\\
+R$^2$ & -0.047557&0.349078&0.358269\\
+Within R$^2$ & -0.452229&0.259342&0.2698\\
+\midrule\midrule\multicolumn{4}{l}{\emph{Heteroskedasticity-robust standard-errors in parentheses}}\\
+\multicolumn{4}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+\end{tabular}
+
+

@@ -7,7 +7,12 @@ import os
 pm_dfs = os.listdir("../raw_data/pm25/")
 pm_dfs.remove(".DS_Store")
 pm = pd.concat([pd.read_pickle(f"../raw_data/pm25/{file}") for file in pm_dfs])
-pm = pm[['latitude','longitude','date_local','time_local','sample_measurement','datum']]
+pm = pm[['latitude','longitude','site_number','date_local','time_local','sample_measurement','datum']]
+pm['hour'] = pm['time_local'].apply(lambda x: int(x[0:2]))
+pm['date_local'] = pm['date_local'].apply(datetime.date.fromisoformat)
+pm['year'] = pm['date_local'].apply(lambda x: x.year)
+pm['month'] = pm['date_local'].apply(lambda x: x.month)
+pm['day'] = pm['date_local'].apply(lambda x: x.day)
 
 fire_dfs = os.listdir("../processed_data/cropland_fires/")
 fire_dfs.remove(".DS_Store")
@@ -25,7 +30,8 @@ sac_cropland_fires = pd.merge(sac_fires,cropland_fires['index'],
 
 basin_met = pd.read_pickle("../processed_data/basin_met_clean.pkl")
 basin_met['alloc_eq_manual'] = (-1/0.006)* (-170 + (1 * basin_met['am_stab']) + (0.2049159 * basin_met['millibar500_ht'])- (0.3579679 * basin_met['wind_spd']) + (1 * basin_met['aq_fact']))
-basin_met = basin_met[['date','burn_dec_3000','aq_fact','alloc_eq','alloc_eq_manual','arb_rev_basin_alloc']]
+basin_met['meteorologist']=basin_met['meteorologist'].apply(lambda x: x.lower())
+#basin_met = basin_met[['date','burn_dec_3000','aq_fact','alloc_eq','alloc_eq_manual','arb_rev_basin_alloc','meteorologist']]
 
 sac_cfires_daily = sac_cropland_fires.groupby('acq_date')['fires'].sum()
 basin_met_fires = pd.merge(basin_met,sac_cfires_daily,
@@ -61,7 +67,7 @@ pm_fires = pd.merge(pm,pm_fires,
                    right_on = ['longitude','latitude','datum','acq_date'],
                    how='left')
 
-pm_fires = pm_fires.groupby(['longitude','latitude','datum','date_local']).agg({'fires':'first','sample_measurement':'max'})
+pm_fires = pm_fires.groupby(['site_number','longitude','latitude','datum','year','month','day','hour']).agg({'date_local':'first','fires':'first','sample_measurement':'mean'}).reset_index()
 pm_fires['fires'] = pm_fires['fires'].fillna(0)
 basin_met['date'] = basin_met['date'].apply(str)
 pm_fires = pd.merge(pm_fires,basin_met,
