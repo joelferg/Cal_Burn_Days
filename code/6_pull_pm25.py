@@ -1,11 +1,12 @@
-import pandas as pd
-import geopandas as gpd
-import datetime
-import requests
 import re
 import ast
 import time
 import os
+import datetime as dt
+import requests
+
+import pandas as pd
+import geopandas as gpd
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -22,7 +23,7 @@ def processAQI(url):
         df = pd.DataFrame(text['Data'])
         return(df)
     else:
-        print("No data")
+        print(f"No data: {url}")
         pass
 
 def addZeros(x,n):
@@ -39,12 +40,12 @@ basins = basins.to_crs("EPSG:4326")
 sac_valley = basins.loc[basins['NAME']=="Sacramento Valley"]
 
 sac_counties = gpd.sjoin(counties,sac_valley,
-                        how="inner",op="intersects")
+                        how="inner",predicate="intersects")
 sac_counties = sac_counties['COUNTYFP'].to_list()
 
 
 already_pulled = os.listdir("../raw_data/pm25/")
-for year in range(2012,2021):
+for year in range(2005,2023):
     #end_date = datetime.date(year+(month//12),(month%12)+1,1)-datetime.timedelta(days=1)
     for county in sac_counties:
         if f"pm25_06{county}_{year}.pkl" not in already_pulled:

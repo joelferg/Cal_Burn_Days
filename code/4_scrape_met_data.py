@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import psycopg2
-import datetime
+import datetime as dt
 import time
 import re
 
@@ -36,7 +36,7 @@ def scrapePage(date):
         sql = ''' INSERT INTO basin_met (date,form_date,time,meteorologist,burn_dec_3000,am_stab,wind_spd,millibar500_ht,rain,met_fact,aq_fact,alloc_eq,arb_rev_basin_alloc,rev_basin_alloc)
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'''
 
-        cur.execute(sql,(f"{year}-{month}-{day}",norms['Date:'],norms['Local Time:'],norms['Meteorologist:'],norms['Ag Burn Decision Above 3000 ft:'],norms['A.M. Stability (°F)'],norms['Wind Speed (mph)\xa0'],norms['500 millibar height (decameters)'],norms['Average Rainfall (in)'],norms['Meteorological (MET) Factor'],norms['Air Quality (AQ) Factor (Basinwide 00-06 PST Average PM2.5)'], norms['Allocation Equation:'],norms['ARB REVISED Basinwide Allocation'],norms['Revised Allocation']))
+        cur.execute(sql,(f"{year}-{month}-{day}",norms['Date:'],norms['Local Time:'],norms['Meteorologist:'],norms['Ag Burn Decision Above 3000 ft:'][0:40],norms['A.M. Stability (°F)'],norms['Wind Speed (mph)\xa0'],norms['500 millibar height (decameters)'],norms['Average Rainfall (in)'],norms['Meteorological (MET) Factor'],norms['Air Quality (AQ) Factor (Basinwide 00-06 PST Average PM2.5)'], norms['Allocation Equation:'],norms['ARB REVISED Basinwide Allocation'],norms['Revised Allocation']))
     else:
 
         sql = ''' INSERT INTO basin_met (date,form_date,time,meteorologist,burn_dec_3000,am_stab,wind_spd,millibar500_ht,rain,met_fact,aq_fact,alloc_eq,arb_rev_basin_alloc,rev_basin_alloc)
@@ -47,14 +47,14 @@ def scrapePage(date):
     conn.commit()
 
 
-start_date = datetime.date(2012,1,1)
-end_date = datetime.date(2020,12,31)
+start_date = dt.date(2005,9,7) # First day of recorded data as far as I can tell
+end_date = dt.date(2022,12,31)
 days_tot = (end_date-start_date).days
 
 last_yr = 0
 
 for day in range(0,days_tot):
-    date = start_date+datetime.timedelta(days=day)
+    date = start_date+dt.timedelta(days=day)
     yr = date.year
     if yr!=last_yr:
         print(yr)
