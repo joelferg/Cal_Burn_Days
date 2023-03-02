@@ -1,30 +1,31 @@
 \begin{tabular}{lccc}
 \tabularnewline\midrule\midrule
-Dependent Variables:&fires&\multicolumn{2}{c}{sample\_measurement}\\
+Dependent Variables:&fires&\multicolumn{2}{c}{pm25\_ihs}\\
 Model:&(1) & (2) & (3)\\
 \midrule \emph{Variables}&   &   &  \\
-arb\_rev\_basin\_alloc&0.0106$^{***}$ & 0.0024$^{***}$ &   \\
-  &(0.0031) & (0.0004) &   \\
-am\_stab&0.3421$^{***}$ & 0.0564$^{***}$ & -0.0036\\
-  &(0.0821) & (0.0089) & (0.0055)\\
-wind\_spd&0.1082 & 0.0734$^{***}$ & 0.0038\\
-  &(0.1147) & (0.0154) & (0.0078)\\
-millibar500\_ht&0.0286 & 0.0751$^{***}$ & 0.0607$^{***}$\\
-  &(0.0336) & (0.0046) & (0.0038)\\
-rain&2.082 & 2.648$^{***}$ & 1.826$^{***}$\\
-  &(1.523) & (0.1995) & (0.1204)\\
-aq\_fact&0.0830 & 0.8084$^{***}$ & 0.7647$^{***}$\\
-  &(0.0644) & (0.0178) & (0.0152)\\
-fires&   &    & 1.089$^{***}$\\
-  &   &    & (0.3404)\\
+arb\_rev\_basin\_alloc&0.0134$^{***}$ & 0.0004$^{***}$ &   \\
+  &(0.0037) & ($3.057\times 10^{-5}$) &   \\
+am\_stab&0.4674$^{***}$ & 0.0173$^{***}$ & 0.0077$^{***}$\\
+  &(0.0903) & (0.0007) & (0.0004)\\
+wind\_spd&0.2344 & 0.0012 & -0.0076$^{***}$\\
+  &(0.1440) & (0.0012) & (0.0006)\\
+millibar500\_ht&0.0324 & 0.0117$^{***}$ & 0.0098$^{***}$\\
+  &(0.0429) & (0.0004) & (0.0003)\\
+rain&3.109 & 0.1818$^{***}$ & 0.0784$^{***}$\\
+  &(1.974) & (0.0176) & (0.0115)\\
+aq\_fact&0.1717$^{*}$ & 0.0355$^{***}$ & 0.0301$^{***}$\\
+  &(0.0930) & (0.0008) & (0.0005)\\
+fires&   &    & 0.2417$^{***}$\\
+  &   &    & (0.0233)\\
 \midrule \emph{Fixed-effects}&   &   &  \\
-month$\times$year & Yes &  & \\
+month & Yes &  & \\
+year & Yes & Yes & Yes\\
 site\_number$\times$month &  & Yes & Yes\\
-year &  & Yes & Yes\\
+hour &  & Yes & Yes\\
 \midrule \emph{Fit statistics}&  & & \\
-Observations & 2,521&199,779&199,779\\
-R$^2$ & -0.047557&0.349078&0.358269\\
-Within R$^2$ & -0.452229&0.259342&0.2698\\
+Observations & 2,521&192,013&192,013\\
+R$^2$ & -0.551911&0.228893&0.156276\\
+Within R$^2$ & -0.844353&0.071524&-0.015913\\
 \midrule\midrule\multicolumn{4}{l}{\emph{Heteroskedasticity-robust standard-errors in parentheses}}\\
 \multicolumn{4}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
 \end{tabular}
