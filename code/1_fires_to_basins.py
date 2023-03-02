@@ -8,7 +8,7 @@ import ee
 # Read in air basins and re-project
 air_basins = gpd.read_file("../raw_data/maps/california-air-resources-board-air-basin-boundaries/CaAirBasin.shp")
 air_basins = air_basins.to_crs("EPSG:4326")
-air_basins.plot()
+#air_basins.plot()
 
 # Read in fires and make into gdf
 fires = pd.read_csv("../raw_data/fires/DL_FIRE_SV-C2_212843/fire_archive_SV-C2_212843.csv")
