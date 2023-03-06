@@ -6,6 +6,7 @@ import datetime as dt
 import requests
 
 import pandas as pd
+import numpy as np
 import geopandas as gpd
 from dotenv import load_dotenv
 
@@ -43,14 +44,19 @@ sac_counties = gpd.sjoin(counties,sac_valley,
                         how="inner",predicate="intersects")
 sac_counties = sac_counties['COUNTYFP'].to_list()
 
+if os.path.isfile("../processed_data/tried_pm25.npy"):
+    tried = list(np.load("../processed_data/tried_pm25.npy"))
+else:
+    tried = []
 
 already_pulled = os.listdir("../raw_data/pm25/")
 for year in range(2005,2023):
-    #end_date = datetime.date(year+(month//12),(month%12)+1,1)-datetime.timedelta(days=1)
     for county in sac_counties:
+        tried.append(f"pm25_06{county}_{year}.pkl")
+        np.save("../processed_data/tried_pm25.npy",np.array(tried))
         if f"pm25_06{county}_{year}.pkl" not in already_pulled:
             url = f"https://aqs.epa.gov/data/api/sampleData/byCounty?email={email}&key={key}&param=88101&bdate={year}0101&edate={year}{12}{31}&state=06&county={county}"
             df = processAQI(url)
             if type(df)!=type(None):
                 df.to_pickle(f"../raw_data/pm25/pm25_06{county}_{year}.pkl")
-            time.sleep(6)
+                time.sleep(0.5)

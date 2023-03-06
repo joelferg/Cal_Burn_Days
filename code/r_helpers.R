@@ -1,6 +1,12 @@
 require(fixest)
 require(dplyr)
 
+# Inverse hyperbolic sine
+ihs <- function(x){
+  out <- log(x+sqrt(x^2+1))
+  return(out)
+}
+
 #Triangle Kernel
 tri_k <- function(x){
   out <- (1-abs(x))*(abs(x)<=1)
